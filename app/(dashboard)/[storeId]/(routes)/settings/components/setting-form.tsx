@@ -17,6 +17,7 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { ApiAlert } from "@/components/ui/api-alert";
+import { useOrigin } from "@/hooks/use-origin";
 
 interface SettingFormProps {
     initialData : Store
@@ -35,6 +36,7 @@ export const SettingsForm: React.FC<SettingFormProps> = ({
 
     const params = useParams();
     const router = useRouter();
+    const origin = useOrigin();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -100,7 +102,7 @@ export const SettingsForm: React.FC<SettingFormProps> = ({
             <Separator />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-                    <div className="grid grid-col3 gap-8">
+                    <div className="grid grid-cols-3 gap-8">
                         <FormField 
                         control={form.control}
                         name="name"
@@ -123,7 +125,7 @@ export const SettingsForm: React.FC<SettingFormProps> = ({
             <Separator />
             <ApiAlert 
             title="NEXT_PUBLIC_API_URL"
-            description="test"
+            description={`${origin}/api/${params.storeId}`}
             variant="public"
             />
         </>
